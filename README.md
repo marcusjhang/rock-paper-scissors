@@ -1,1 +1,1 @@
-TheOdinProject
+TheOdinProject Foundations
