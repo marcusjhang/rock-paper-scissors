@@ -4,83 +4,116 @@ function getComputerChoice() {
     return choices[randomIndex];
 }
 
-function playRound (player, computer) {
-    
+var roundCounter = 1;
+
+function playRound(player) {
+    var computer = getComputerChoice();
+
     player = player.toLowerCase();
 
     if (player == "rock") {
-        switch(computer) {
+        switch (computer) {
             case "rock":
-                return "Draw!";
+                showResult("Draw!");
+                break;
 
             case "scissors":
-                return "You win!";
+                showResult("You win!");
+                break;
 
             case "paper":
-                return "You lose!";
+                showResult("You lose!");
+                break;
 
             default:
-                return "Invalid choice.";
+                showResult("Invalid choice.");
+                break;
         }
     }
 
     if (player == "paper") {
         switch(computer) {
             case "rock":
-                return "You win!";
+                showResult("You win!");
+                break;
 
             case "scissors":
-                return "You lose!";
+                showResult("You lose!");
+                break;
 
             case "paper":
-                return "Draw!";
+                showResult("Draw!");
+                break;
 
             default:
-                return "Invalid choice.";
+                showResult("Invalid choice.");
+                break;
         }
     }
 
     if (player == "scissors") {
         switch(computer) {
             case "rock":
-                return "You lose!";
+                showResult("You lose!");
+                break;
 
             case "scissors":
-                return "Draw!";
+                showResult("Draw!");
+                break;
 
             case "paper":
-                return "You win!";
+                showResult("You win!");
+                break;
 
             default:
-                return "Invalid choice.";
+                showResult("Invalid choice.");
+                break;
         }
     }
 
+    function showResult(result) {
+        var resultElement = document.getElementById("result");
+        resultElement.textContent = result;
+
+        var roundNumberElement = document.getElementById("roundNumber");
+        roundNumberElement.textContent = roundCounter;
+    }
 }
 
-var roundNumber = 1;
-
 function game() {
-    var playerScore = 0;
-    var computerScore = 0;
-    for (var i = 0; i < 5; i++) {
-        var playerChoice = prompt("Enter your choice.");
-        var computerChoice = getComputerChoice();
+    var maxRounds = 5;
 
-        var result = playRound(playerChoice, computerChoice);
-        console.log("Result: ", result)
+    var rockButton = document.getElementById("rockButton");
+    rockButton.addEventListener("click", function() {
+        if (roundCounter <= maxRounds) {
+            playRound("rock");
+        }
+        checkGameOver();
+    });
 
-        if (result.includes("win")) {
-            playerScore++;
-          } else if (result.includes("lose")) {
-            computerScore++;
-          }
+    var paperButton = document.getElementById("paperButton");
+    paperButton.addEventListener("click", function() {
+        if (roundCounter <= maxRounds) {
+            playRound("paper");
+        }
+        checkGameOver();
+    });
 
-        roundNumber ++
+    var scissorsButton = document.getElementById("scissorsButton");
+    scissorsButton.addEventListener("click", function() {
+        if (roundCounter <= maxRounds) {
+            playRound("scissors");
+        }
+        checkGameOver();
+    });
+
+    function checkGameOver() {
+        if (roundCounter > maxRounds) {
+            console.log("Game over! Maximum rounds reached.");
+        } else {
+            roundCounter++
+        }
     }
-
-    console.log("Player Score: ", playerScore);
-    console.log("Computer Score: ", computerScore);
 }
 
 game();
