@@ -74,9 +74,6 @@ function playRound(player) {
     function showResult(result) {
         var resultElement = document.getElementById("result");
         resultElement.textContent = result;
-
-        var roundNumberElement = document.getElementById("roundNumber");
-        roundNumberElement.textContent = roundCounter;
     }
 }
 
@@ -108,10 +105,14 @@ function game() {
     });
 
     function checkGameOver() {
+        roundCounter++
+
         if (roundCounter > maxRounds) {
-            console.log("Game over! Maximum rounds reached.");
+            var resultElement = document.getElementById("result");
+            resultElement.textContent = "Game over! Maximum rounds reached.";
         } else {
-            roundCounter++
+            var roundNumberElement = document.getElementById("roundNumber");
+            roundNumberElement.textContent = roundCounter;
         }
     }
 }
